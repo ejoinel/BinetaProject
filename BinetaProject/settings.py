@@ -14,7 +14,11 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_IMAGE_PROFILE_MEN = os.path.join(MEDIA_ROOT, 'Icons', 'Men' )
+MEDIA_IMAGE_PROFILE_WOMEN = os.path.join(MEDIA_ROOT, 'Icons', 'Women' )
+MEDIA_IMAGES_PROFILE = os.path.join(MEDIA_ROOT, 'ImagesProfile' )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -30,14 +34,29 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = (
+    # django app
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
+    # third party apps
+    'rest_framework',
+    # My app
+    'Bineta'
+)
+
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -66,7 +85,6 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = 'BinetaProject.wsgi.application'
 
 
@@ -75,8 +93,12 @@ WSGI_APPLICATION = 'BinetaProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'bineta',
+        'USER': 'root',
+        'PASSWORD': 'nous_pau',
+        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
     }
 }
 

@@ -13,9 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
 from django.contrib import admin
+from rest_framework import routers
+from django.conf.urls import url, include
+
+
+from Bineta.services import DocumentViewSet, DocumentList
+
+router = routers.SimpleRouter()
+router.register(r'Document', DocumentViewSet)
 
 urlpatterns = [
+    url(r'^', include(router.urls)),
     url(r'^admin/', admin.site.urls),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # Webservices
+    url( r'^api/v1/documents/', DocumentList, name="documents" )
 ]
